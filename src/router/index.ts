@@ -3,10 +3,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 import LoginPage from '../views/Login.vue'
 import DashboardPage from '../views/Dashboard.vue'
 
-import UserInfo from '../components/UserInfo.vue'
 import ListUsers from '../components/ListUsers.vue'
 import RegisterUser from '../components/RegisterUser.vue'
-import EditUser from '../components/EditUser.vue'
 
 export default createRouter({
   history: createWebHistory(),
@@ -22,14 +20,12 @@ export default createRouter({
       component: LoginPage,
     },
     {
-      path: '/dashboard/:id/',
+      path: '/dashboard',
       name: 'dashboard-page',
       component: DashboardPage,
       children: [
-        { path: 'info', name: 'user', component: UserInfo },
-        { path: 'list', component: ListUsers },
+        { path: '', name: 'User-List', component: ListUsers },
         { path: 'register', component: RegisterUser },
-        { path: 'edit', component: EditUser },
       ],
     },
   ],
