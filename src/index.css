@@ -17,4 +17,8 @@
 	.base-input{
 		@apply border-b-2 border-main w-full
 	}
+
+	.base-label{
+		@apply text-darker font-bold pb-2
+	}
 }
