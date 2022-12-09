@@ -5,9 +5,6 @@
 <template>
   <section class="flex flex-col justify-between">
     <h1 class="text-xl font-bold">Registrar Usuário</h1>
-
-    <FormVue :username="''" :fullname="''" :email="''" />
-
-    <button class="base-btn">Adicionar Usuario</button>
+    <FormVue btn-name="Adicionar Usuário" action="add" />
   </section>
 </template>

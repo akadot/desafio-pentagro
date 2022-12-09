@@ -19,11 +19,18 @@
       </button>
     </section>
     <FormVue
+      :id="user.id"
       :username="user.userName"
       :fullname="user.name"
       :email="user.email"
+      :token-expiration="user.loginExpiration"
+      :warnings="user.receiveAutonomousWarning"
+      :tickets="user.supervisor"
+      :disabled-user="user.disabled"
+      :unit-id="user.unitId"
+      btn-name="Atualizar Usuário"
+      action="update"
     />
-    <button class="mt-5 base-btn w-full">Salvar Alterações</button>
   </section>
 </template>
 
