@@ -97,6 +97,17 @@
             this.userpass.toString()
           )
 
+          console.log(this.username)
+          console.log(this.userpass)
+          console.log(username)
+          console.log(password)
+          console.log(
+            JSON.stringify({
+              Username: username,
+              UserPassword: password,
+            })
+          )
+
           fetch('http://186.237.58.167:65129/api/user/login', {
             method: 'POST',
             body: JSON.stringify({
@@ -111,12 +122,16 @@
               return res.json()
             })
             .then((data) => {
-              window.alert('Sucesso')
-              localStorage.setItem('api-token', data)
-              this.$router.push({ path: `/dashboard` })
+              if (typeof data == 'string' && data != '') {
+                window.alert('Login efeutado Sucesso.')
+                localStorage.setItem('api-token', data)
+                this.$router.push({ path: `/dashboard` })
+              } else {
+                window.alert('Erro de Login.')
+              }
             })
             .catch((err) => {
-              //exibir mensagem ao usuário
+              window.alert('Erro de Login.')
               console.error(`!ERROR!: ${err}`)
             })
         }

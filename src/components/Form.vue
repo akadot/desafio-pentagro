@@ -16,7 +16,7 @@
         />
       </section>
       <select v-model="localUnitId" class="border-b-2 border-main">
-        <option v-for="unit in units" :key="unit.id" :value="unit.name">
+        <option v-for="unit in units" :key="unit.id" :value="unit.id">
           {{ unit.name }}
         </option>
       </select>
@@ -126,7 +126,7 @@
       localDisabledUser: false,
       localPassword: '',
       localRepeatPassword: '',
-      localUnitId: { unitid: 0, unitTxt: '' },
+      localUnitId: 0,
       errorMsg: '',
     }),
     created() {
@@ -138,7 +138,7 @@
       this.localWarnings = this.warnings
       this.localTickets = this.tickets
       this.localDisabledUser = this.disabledUser
-      this.localUnitId.unitid = this.unitId
+      this.localUnitId = this.unitId
       this.getUnits()
     },
     methods: {
@@ -165,7 +165,7 @@
           this.localemail == '' ||
           this.localPassword == '' ||
           this.localRepeatPassword == '' ||
-          this.localUnitId.unitid == 0
+          this.localUnitId == 0
         ) {
           this.errorMsg = '*Preencha todos os campos antes de finalizar.'
           check = false
@@ -183,21 +183,21 @@
         const check = this.checkForm()
 
         if (check == true) {
-          const encPassword = encryptPass(this.localPassword.toString())
+          const encPassword = encryptPass(this.localPassword)
 
           const newUserObj = {
             id: 0,
             userName: this.localUsername,
-            name: this.fullname,
+            name: this.localFullName,
             UserPassword: encPassword,
             email: this.localemail,
             improveTeamMember: true,
-            supervisor: this.localTickets,
+            supervisor: true,
             receiveAutonomousWarning: this.localWarnings,
-            loginExpiration: this.tokenExpiration,
+            loginExpiration: this.localTokenExp,
             disabled: this.localDisabledUser,
             system: 'G',
-            unitId: this.localUnitId.unitid,
+            unitId: this.localUnitId,
           }
 
           fetch('http://186.237.58.167:65129/api/user/saveuser', {
@@ -209,7 +209,11 @@
             body: JSON.stringify(newUserObj),
           })
             .then((res) => {
-              window.alert('Usuário criado com sucesso.')
+              if (res.status == 200) {
+                window.alert('Usuário criado com sucesso.')
+              } else {
+                window.alert('Erro ao criar usuário.')
+              }
               console.log(res)
             })
             .catch((err) => console.log(err))
@@ -221,7 +225,7 @@
         const check = this.checkForm()
 
         if (check == true) {
-          const encPassword = encryptPass(this.localPassword.toString())
+          const encPassword = encryptPass(this.localPassword)
 
           const newUserObj = {
             id: this.localID,
@@ -230,7 +234,7 @@
             UserPassword: encPassword,
             email: this.localemail,
             improveTeamMember: true,
-            supervisor: this.localTickets,
+            supervisor: true,
             receiveAutonomousWarning: this.localWarnings,
             loginExpiration: this.tokenExpiration,
             disabled: this.localDisabledUser,
@@ -247,16 +251,23 @@
             body: JSON.stringify(newUserObj),
           })
             .then((res) => {
-              window.alert('Usuário editado com sucesso.')
+              if (res.status == 200) {
+                window.alert('Usuário editado com sucesso.')
+              } else {
+                window.alert('Erro ao editar usuário.')
+              }
               console.log(res)
             })
             .catch((err) => console.log(err))
         }
       },
       sendForm() {
-        if (this.action == 'update') {
-          this.editUser()
-        } else if (this.action == 'add') {
+        console.log(this.action)
+        if (this.action === 'update') {
+          console.log('edit')
+          // this.editUser()
+        } else if (this.action === 'add') {
+          console.log('add')
           this.addUser()
         }
       },
