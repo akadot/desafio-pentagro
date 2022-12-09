@@ -13,4 +13,11 @@ function encryptLogin(username: string, password: string) {
   return userCencrypted
 }
 
-export { encryptLogin }
+function encryptPass(password: string) {
+  const md5pass = crypto.MD5(password)
+  const base64pass = btoa(md5pass.toString())
+
+  return base64pass
+}
+
+export { encryptLogin, encryptPass }

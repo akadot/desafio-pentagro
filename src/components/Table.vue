@@ -21,9 +21,11 @@
         <section class="table-cell">{{ user.id }}</section>
         <section class="table-cell">{{ user.name }}</section>
         <section class="table-cell">{{ user.email }}</section>
-        <section class="table-cell text-center">{{ user.disabled }}</section>
+        <section class="table-cell">
+          {{ user.disabled ? 'Inativo' : 'Ativo' }}
+        </section>
         <section class="table-cell text-center">
-          <button>
+          <button @click="() => handleModal(user)">
             <PencilSquareIcon class="h-5 text-main hover:text-darker" />
           </button>
         </section>
@@ -36,6 +38,12 @@
   export default {
     components: {
       PencilSquareIcon,
+    },
+    emits: ['open-modal'],
+    methods: {
+      handleModal(user: User) {
+        this.$emit('open-modal', user)
+      },
     },
   }
 </script>

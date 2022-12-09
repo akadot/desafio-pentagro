@@ -111,6 +111,7 @@
               return res.json()
             })
             .then((data) => {
+              window.alert('Sucesso')
               localStorage.setItem('api-token', data)
               this.$router.push({ path: `/dashboard` })
             })
