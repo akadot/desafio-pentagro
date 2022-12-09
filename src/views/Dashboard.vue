@@ -24,10 +24,20 @@
           to="/login"
           class="py-5 pl-5 w-full hover:bg-white hover:text-red-500 hover:font-bold"
         >
-          Sair
+          <button @click="logout">Sair</button>
         </RouterLink>
       </nav>
       <RouterView :key="$route.path" class="p-8 w-full"></RouterView>
     </section>
   </section>
 </template>
+
+<script lang="ts">
+  export default {
+    methods: {
+      logout() {
+        localStorage.removeItem('api-token')
+      },
+    },
+  }
+</script>
